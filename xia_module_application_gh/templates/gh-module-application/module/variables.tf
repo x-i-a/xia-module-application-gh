@@ -1,9 +1,36 @@
-variable "landscape_file" {
+variable "module_name" {
   type = string
-  description = "Landscape file"
+  description = "Module Name"
 }
 
-variable "applications_file" {
+variable "config_file" {
   type = string
-  description = "Application config file"
+  description = "Project config file"
+  default = ""
 }
+
+variable "landscape" {
+  type = any
+  description = "Landscape Configuration"
+}
+
+variable "applications" {
+  type = map(any)
+  description = "Application Configuration"
+}
+
+variable "environment_dict" {
+  type = map(any)
+  description = "Environment Configuration"
+}
+
+variable "app_env_config" {
+  type = map(any)
+  description = "Application Environment Configuration"
+}
+
+variable "module_app_to_activate" {
+  type = map(list(any))
+  description = "Application to be activated for all modules"
+}
+

@@ -7,8 +7,8 @@ terraform {
 }
 
 locals {
-  landscape = yamldecode(file(var.landscape_file))
-  applications = yamldecode(file(var.applications_file))
+  landscape = var.landscape
+  applications = var.applications
   environment_dict = local.landscape["environments"]
 }
 
@@ -74,7 +74,7 @@ resource "github_repository" "app-repository" {
 }
 
 resource "github_repository_environment" "action_environments" {
-  for_each = { for s in local.all_pool_settings : "${s.app_name}-${s.env_name}" => s }
+  for_each = var.app_env_config
 
   environment         = each.value["env_name"]
   repository          = each.value["repository_name"]
