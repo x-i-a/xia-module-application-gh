@@ -1,3 +1,7 @@
+provider "github" {
+  owner = lookup(yamldecode(file("../../../config/core/github.yaml"))["settings"], "github_owner", null)
+}
+
 module "gh_module_application" {
   source = "../../modules/gh-module-application"
 
