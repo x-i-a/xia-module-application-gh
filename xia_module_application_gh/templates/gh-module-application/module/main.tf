@@ -6,7 +6,12 @@ terraform {
   }
 }
 
+provider "github" {
+  owner = lookup(yamldecode(file(local.github_config)), "github_owner", null)
+}
+
 locals {
+  github_config = yamldecode(file(var.config_file))
   landscape = var.landscape
   applications = var.applications
   environment_dict = local.landscape["environments"]

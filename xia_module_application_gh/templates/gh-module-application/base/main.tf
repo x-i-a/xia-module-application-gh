@@ -2,6 +2,7 @@ module "gh_module_application" {
   source = "../../modules/gh-module-application"
 
   module_name = "gh-module-application"
+  config_file = "../../../config/core/github.yaml"
   landscape = local.landscape
   applications = local.applications
   environment_dict = local.environment_dict
