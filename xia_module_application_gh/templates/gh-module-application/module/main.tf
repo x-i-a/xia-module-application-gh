@@ -1,3 +1,11 @@
+terraform {
+  required_providers {
+    github = {
+      source  = "integrations/github"
+    }
+  }
+}
+
 locals {
   github_config = yamldecode(file(var.config_file))
   landscape = var.landscape
