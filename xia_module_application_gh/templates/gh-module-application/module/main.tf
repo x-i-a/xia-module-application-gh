@@ -7,7 +7,7 @@ terraform {
 }
 
 provider "github" {
-  owner = lookup(yamldecode(file(local.github_config)), "github_owner", null)
+  owner = lookup(local.github_config, "github_owner", null)
 }
 
 locals {
