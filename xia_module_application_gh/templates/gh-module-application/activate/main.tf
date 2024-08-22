@@ -22,7 +22,8 @@ resource "github_team" "foundation_admin" {
 }
 
 resource "github_team_membership" "current_user_admin" {
-  team_id  = github_team.foundation_admin.id
+  for_each = var.foundations
+  team_id  = github_team.foundation_admin[each.key].id
   username = data.github_user.current.login
   role     = "maintainer"
 }
