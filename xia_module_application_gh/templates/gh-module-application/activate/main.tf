@@ -6,13 +6,27 @@ terraform {
   }
 }
 
-locals {
-  module_name = coalesce(var.module_name, substr(basename(path.module), 9, length(basename(path.module)) - 9))
-}
 
 data "github_user" "current" {
   username = ""
 }
+
+locals {
+  module_name = coalesce(var.module_name, substr(basename(path.module), 9, length(basename(path.module)) - 9))
+
+  github_config = yamldecode(file(var.config_file))
+  _foundation_admins = lookup(local.github_config, "foundation_admins", {})
+
+  foundation_admins = {
+    for foundation_name, foundation_detail in var.foundations : foundation_admins => {
+      foundation_name = foundation_name
+      foundation_admin = lookup(local._foundation_admins, foundation_name,
+        lookup(local._foundation_admins, "default", data.github_user.current.login)
+      )
+    }
+  }
+}
+
 
 resource "github_team" "foundation_admin" {
   for_each = var.foundations
