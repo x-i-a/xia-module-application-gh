@@ -28,16 +28,16 @@ locals {
 }
 
 
-resource "github_team" "foundation_admin" {
+resource "github_team" "foundation_admin_team" {
   for_each = var.foundations
   name        = "${each.value["name"]}-adm"
   description = "Foundation ${each.value["name"]} Administrator Team"
   privacy     = "closed"
 }
 
-resource "github_team_membership" "current_user_admin" {
+resource "github_team_membership" "foundation_admin_member" {
   for_each = var.foundations
-  team_id  = github_team.foundation_admin[each.key].id
-  username = data.github_user.current.login
+  team_id  = github_team.foundation_admin_team[each.key].id
+  username = local.foundation_admins[each.key]
   role     = "maintainer"
 }
