@@ -27,7 +27,6 @@ locals {
   }
 }
 
-
 resource "github_team" "foundation_admin_team" {
   for_each = var.foundations
   name        = "${each.value["name"]}-adm"
