@@ -18,7 +18,7 @@ locals {
   _foundation_admins = lookup(local.github_config, "foundation_admins", {})
 
   foundation_admins = {
-    for foundation_name, foundation_detail in var.foundations : foundation_name => lookup(local._foundation_admins, foundation_name, "not-found")
+    for foundation_name, foundation_detail in var.foundations : foundation_name => lookup(local._foundation_admins, foundation_name, foundation_name)
   }
 }
 
