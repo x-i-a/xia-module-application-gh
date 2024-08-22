@@ -11,6 +11,7 @@ locals {
   landscape = var.landscape
   applications = var.applications
   environment_dict = local.landscape["environments"]
+  foundation_name = local.landscape["settings"]["foundation_name"]
 }
 
 locals {
@@ -59,6 +60,10 @@ data "github_users" "review_users" {
   usernames = each.value["user_names"]
 }
 
+data "github_team" "foundation_admin" {
+  slug = "${local.foundation_name}-adm"
+}
+
 resource "github_repository" "app-repository" {
   for_each = local.applications
 
@@ -72,6 +77,14 @@ resource "github_repository" "app-repository" {
     owner                = each.value["template_owner"]
     repository           = each.value["template_name"]
   }
+}
+
+resource "github_team_repository" "admin-team-repository" {
+  for_each = local.applications
+
+  team_id        = data.github_team.foundation_admin.id
+  repository     = github_repository.app-repository[each.key].name
+  permission     = "admin"
 }
 
 resource "github_repository_environment" "action_environments" {
