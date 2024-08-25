@@ -1,8 +1,13 @@
 provider "github" {
+  alias = "application"
   owner = lookup(yamldecode(file("../../../config/core/github.yaml")), "github_owner", null)
 }
 
 module "gh_module_application" {
+  providers = {
+    github = github.application
+  }
+
   source = "../../modules/gh-module-application"
 
   module_name = "gh-module-application"
