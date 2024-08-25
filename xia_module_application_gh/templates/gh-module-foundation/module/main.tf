@@ -25,14 +25,6 @@ resource "github_repository" "foundation-repository" {
   }
 }
 
-resource "github_actions_secret" "foundation_github_token" {
-  for_each = var.foundations
-
-  repository       = each.value["repository_name"]
-  secret_name      = "foundation_github_token"
-  plaintext_value  = "test"
-}
-
 resource "github_actions_variable" "action_var_cosmos_name" {
   for_each = var.foundations
 
