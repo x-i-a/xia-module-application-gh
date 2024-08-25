@@ -85,11 +85,6 @@ resource "github_team_repository" "admin-team-repository" {
   team_id        = data.github_team.foundation_admin.id
   repository     = github_repository.app-repository[each.key].name
   permission     = "admin"
-
-  # For better deletion dependencies
-  lifecycle {
-    prevent_destroy = true
-  }
 }
 
 resource "github_repository_environment" "action_environments" {
