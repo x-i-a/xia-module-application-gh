@@ -10,8 +10,11 @@ locals {
   github_config = yamldecode(file(var.config_file))
   landscape = var.landscape
   applications = var.applications
+  settings = lookup(var.landscape, "settings", {})
+  cosmos_name = local.settings["cosmos_name"]
+  realm_name = local.settings["realm_name"]
+  foundation_name = local.settings["foundation_name"]
   environment_dict = local.landscape["environments"]
-  foundation_name = local.landscape["settings"]["foundation_name"]
 }
 
 locals {
@@ -100,4 +103,46 @@ resource "github_repository_environment" "action_environments" {
   }
 
   depends_on = [github_repository.app-repository]
+}
+
+
+resource "github_actions_variable" "action_var_cosmos_name" {
+  for_each = local.applications
+
+  repository       = each.value["repository_name"]
+  variable_name    = "COSMOS_NAME"
+  value            = local.cosmos_name
+}
+
+resource "github_actions_variable" "action_var_realm_name" {
+  for_each = local.applications
+
+  repository       = each.value["repository_name"]
+  variable_name    = "REALM_NAME"
+  value            = local.realm_name
+}
+
+resource "github_actions_variable" "action_var_foundation_name" {
+  for_each = local.applications
+
+  repository       = each.value["repository_name"]
+  variable_name    = "FOUNDATION_NAME"
+  value            = local.foundation_name
+}
+
+resource "github_actions_variable" "action_var_app_name" {
+  for_each = local.applications
+
+  repository       = each.value["repository_name"]
+  variable_name    = "APP_NAME"
+  value            = each.value["app_name"]
+}
+
+resource "github_actions_environment_variable" "action_var_env_name" {
+  for_each = var.app_env_config
+
+  repository       = each.value["repository_name"]
+  environment      = each.value["env_name"]
+  variable_name    = "ENV_NAME"
+  value            = each.value["env_name"]
 }
