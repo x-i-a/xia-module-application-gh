@@ -114,6 +114,8 @@ resource "github_actions_variable" "action_var_cosmos_name" {
   repository       = each.value["repository_name"]
   variable_name    = "COSMOS_NAME"
   value            = local.cosmos_name
+
+  depends_on = [github_repository.app-repository]
 }
 
 resource "github_actions_variable" "action_var_realm_name" {
@@ -122,6 +124,8 @@ resource "github_actions_variable" "action_var_realm_name" {
   repository       = each.value["repository_name"]
   variable_name    = "REALM_NAME"
   value            = local.realm_name
+
+  depends_on = [github_repository.app-repository]
 }
 
 resource "github_actions_variable" "action_var_foundation_name" {
@@ -130,6 +134,8 @@ resource "github_actions_variable" "action_var_foundation_name" {
   repository       = each.value["repository_name"]
   variable_name    = "FOUNDATION_NAME"
   value            = local.foundation_name
+
+  depends_on = [github_repository.app-repository]
 }
 
 resource "github_actions_variable" "action_var_app_name" {
@@ -138,6 +144,8 @@ resource "github_actions_variable" "action_var_app_name" {
   repository       = each.value["repository_name"]
   variable_name    = "APP_NAME"
   value            = each.key
+
+  depends_on = [github_repository.app-repository]
 }
 
 resource "github_actions_environment_variable" "action_var_env_name" {
@@ -147,4 +155,6 @@ resource "github_actions_environment_variable" "action_var_env_name" {
   environment      = each.value["env_name"]
   variable_name    = "ENV_NAME"
   value            = each.value["env_name"]
+
+  depends_on = [github_repository_environment.action_environments]
 }

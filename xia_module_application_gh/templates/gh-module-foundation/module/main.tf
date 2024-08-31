@@ -31,6 +31,8 @@ resource "github_actions_variable" "action_var_cosmos_name" {
   repository       = each.value["repository_name"]
   variable_name    = "COSMOS_NAME"
   value            = local.cosmos_name
+
+  depends_on = [github_repository.foundation-repository]
 }
 
 resource "github_actions_variable" "action_var_realm_name" {
@@ -39,6 +41,8 @@ resource "github_actions_variable" "action_var_realm_name" {
   repository       = each.value["repository_name"]
   variable_name    = "REALM_NAME"
   value            = each.value["parent"]
+
+  depends_on = [github_repository.foundation-repository]
 }
 
 resource "github_actions_variable" "action_var_foundation_name" {
@@ -47,4 +51,6 @@ resource "github_actions_variable" "action_var_foundation_name" {
   repository       = each.value["repository_name"]
   variable_name    = "FOUNDATION_NAME"
   value            = each.value["name"]
+
+  depends_on = [github_repository.foundation-repository]
 }
