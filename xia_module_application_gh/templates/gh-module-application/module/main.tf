@@ -15,6 +15,7 @@ locals {
   realm_name = local.settings["realm_name"]
   foundation_name = local.settings["foundation_name"]
   environment_dict = local.landscape["environments"]
+  foundation_as_team = lookup(local.github_config, "foundation_as_team", false)
 }
 
 locals {
@@ -64,6 +65,7 @@ data "github_users" "review_users" {
 }
 
 data "github_team" "foundation_admin" {
+  for_each = local.foundation_as_team ? [local.foundation_name] : []
   slug = "${local.foundation_name}-adm"
 }
 
@@ -83,9 +85,9 @@ resource "github_repository" "app-repository" {
 }
 
 resource "github_team_repository" "admin-team-repository" {
-  for_each = local.applications
+  for_each = local.foundation_as_team ? local.applications : {}
 
-  team_id        = data.github_team.foundation_admin.id
+  team_id        = data.github_team.foundation_admin[local.foundation_name].id
   repository     = github_repository.app-repository[each.key].name
   permission     = "admin"
 }
