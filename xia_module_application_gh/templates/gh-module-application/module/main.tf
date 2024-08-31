@@ -65,7 +65,7 @@ data "github_users" "review_users" {
 }
 
 data "github_team" "foundation_admin" {
-  for_each = local.foundation_as_team ? [local.foundation_name] : []
+  for_each = local.foundation_as_team ? toset([local.foundation_name]) : toset([])
   slug = "${local.foundation_name}-adm"
 }
 
