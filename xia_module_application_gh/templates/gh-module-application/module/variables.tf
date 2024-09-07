@@ -5,7 +5,13 @@ variable "module_name" {
 
 variable "config_file" {
   type = string
-  description = "Project config file"
+  description = "Module config file"
+  default = ""
+}
+
+variable "config_dir" {
+  type = string
+  description = "Module config dictionary"
   default = ""
 }
 

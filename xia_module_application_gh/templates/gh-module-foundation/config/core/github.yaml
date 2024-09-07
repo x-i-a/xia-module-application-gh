@@ -1,4 +1,4 @@
-# github_owner: x-i-a
+# github_owner:
 # foundation_admins:
-#   default: xia-main
-#   protocol/xia-framework: xia-develop
+#   default: <admin_gh_account_id>
+#   <realm_name>/<foundation_name>: <admin_gh_account_id>
