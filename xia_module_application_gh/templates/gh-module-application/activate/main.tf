@@ -23,14 +23,14 @@ locals {
 }
 
 resource "github_team" "foundation_admin_team" {
-  for_each = need_admin_teams ? var.foundations : {}
+  for_each = local.need_admin_teams ? var.foundations : {}
   name        = "${each.value["name"]}-adm"
   description = "Foundation ${each.value["name"]} Administrator Team"
   privacy     = "closed"
 }
 
 resource "github_team_membership" "foundation_admin_member" {
-  for_each = need_admin_teams ? var.foundations : {}
+  for_each = local.need_admin_teams ? var.foundations : {}
   team_id  = github_team.foundation_admin_team[each.key].id
   username = local.foundation_admins[each.key]
   role     = "maintainer"
