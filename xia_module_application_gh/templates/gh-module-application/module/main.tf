@@ -14,7 +14,7 @@ locals {
   cosmos_name = local.settings["cosmos_name"]
   realm_name = local.settings["realm_name"]
   foundation_name = local.settings["foundation_name"]
-  environment_dict = local.landscape["environments"]
+  environment_dict = local.landscape["app_environments"]
   foundation_as_team = lookup(local.github_config, "foundation_as_team", false)
 }
 
