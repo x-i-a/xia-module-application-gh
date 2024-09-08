@@ -14,8 +14,8 @@ class Foundation(Module):
         """
         repo_dict, var_dict = (repo_dict or {}), (var_dict or {})
         config_file, config_dir = self.get_config_file_path()
-        if "repo" in repo_dict:
-            github_owner_name = repo_dict["repo"]
+        if "owner" in repo_dict:
+            github_owner_name = repo_dict["owner"]
             github_replace_dict = {
                 "github_owner:": f"github_owner: {github_owner_name}\n",
             }
